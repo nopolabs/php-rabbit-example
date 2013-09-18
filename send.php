@@ -2,6 +2,14 @@
 include(__DIR__ . '/config.php');
 include(__DIR__ . '/rabbit.php');
 
+// usage: send.php [auto|basic] [count]
+// e.g. php -f send.php auto 100
+
+// auto and basic are used to selected a queue and a routingKey
+// with either autoAck or basicAck behavior. Actually implementing
+// those behaviors is the responsibility of the queue consumer,
+// see recv.php
+
 $ack = isset($argv[1]) ? $argv[1] : "auto";
 $count = isset($argv[2]) ? $argv[2] : 1;
 
