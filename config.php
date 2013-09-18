@@ -6,8 +6,6 @@ define('HOST',     'localhost');
 define('PORT',     5672);
 define('USER',     'guest');
 define('PASS',     'guest');
-define('EXCHANGE', 'test');
-define('QUEUE',    'test');
 
 //If this is enabled you can see AMQP output on the CLI
-//define('AMQP_DEBUG', true);
+define('AMQP_DEBUG', true);

@@ -37,20 +37,20 @@ class Rabbit {
         $this->queue      = $queue;
     }
 
-    public function send($body) {
+    public function send($body, $routing_key = "") {
         $msg = new AMQPMessage(
             $body, 
             array('content_type'  => 'text/plain', 
-                  'delivery_mode' => 2));
-        $this->channel->basic_publish($msg, $this->exchange);
+                  'delivery_mode' => 2)); // persistent
+        $this->channel->basic_publish($msg, $this->exchange, $routing_key);
     }
 
-    public function listen($callback) {
+    public function listen($callback, $auto_ack = true) {
         $this->channel->basic_consume(
             $this->queue, // name
             'recv.php',   // consumer_tag
             false,        // no_local?
-            false,        // no_ack?
+            $auto_ack,    // no_ack?
             false,        // exclusive?
             false,        // nowait?
             $callback);   // callback
