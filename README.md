@@ -1,9 +1,9 @@
-# Example code for testing and understanding interactions between PHP and RabbitMQ
+## Example code for testing and understanding interactions between PHP and RabbitMQ
 
-## Uses composer to load dependencies. 
+### Uses composer to load dependencies. 
 See http://getcomposer.org
 
-## send.php
+### send.php
     usage: send.php [auto|basic] [count]
   
     e.g. php -f send.php auto 100
@@ -13,7 +13,7 @@ See http://getcomposer.org
     those behaviors is the responsibility of the queue consumer,
     see recv.php
 
-## recv.php
+### recv.php
     usage: recv.php [auto|basic]
-    
+
     e.g. php -f recv.php auto
