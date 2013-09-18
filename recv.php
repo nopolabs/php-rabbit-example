@@ -2,6 +2,9 @@
 include(__DIR__ . '/config.php');
 include(__DIR__ . '/rabbit.php');
 
+// usage: recv.php [auto|basic]
+// e.g. php -f recv.php auto
+
 $ack = isset($argv[1]) ? $argv[1] : "auto";
 $auto_ack = $ack == "auto"
 
