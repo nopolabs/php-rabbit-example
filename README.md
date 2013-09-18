@@ -1,7 +1,7 @@
-### Example code for testing and understanding interactions between PHP and RabbitMQ
+### Example code using php-amqplib and RabbitMQ
 
 #### Uses composer to load dependencies. 
-See http://getcomposer.org
+See composer.json and http://getcomposer.org
 
 #### send.php
     usage: send.php [auto|basic] [count]
