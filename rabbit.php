@@ -8,8 +8,9 @@ class Rabbit {
     private $channel;
     private $exchange;
     private $queue;
+    private $routing_key;
 
-    public function __construct($host, $port, $user, $pass, $exchange, $queue) {
+    public function __construct($host, $port, $user, $pass, $exchange, $queue, $routing_key) {
 
         $conn = new AMQPConnection($host, $port, $user, $pass);
         
@@ -29,20 +30,21 @@ class Rabbit {
             true,      // durable?
             false);    // auto_delete?
 
-        $ch->queue_bind($queue, $exchange);
+        $ch->queue_bind($queue, $exchange, $routing_key);
 
         $this->connection = $conn;
         $this->channel    = $ch;
         $this->exchange   = $exchange;
         $this->queue      = $queue;
+        $this->routing_key      = $routing_key;
     }
 
-    public function send($body, $routing_key = "") {
+    public function send($body) {
         $msg = new AMQPMessage(
             $body, 
             array('content_type'  => 'text/plain', 
                   'delivery_mode' => 2)); // persistent
-        $this->channel->basic_publish($msg, $this->exchange, $routing_key);
+        $this->channel->basic_publish($msg, $this->exchange, $this->routing_key);
     }
 
     public function listen($callback, $auto_ack = true) {

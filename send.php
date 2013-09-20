@@ -10,19 +10,19 @@ include(__DIR__ . '/rabbit.php');
 // those behaviors is the responsibility of the queue consumer,
 // see recv.php
 
-$ack = isset($argv[1]) ? $argv[1] : "auto";
+$ack = isset($argv[1]) ? $argv[1] : "basic";
 $count = isset($argv[2]) ? $argv[2] : 1;
 
 $exchange    = "test";
 $routing_key = $ack . "Ack";
 $queue       = $routing_key;
 
-$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, $queue);
+$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, $queue, $routing_key);
 
 $msg_body = "hello " . $ack;
 
 for ($i = 1; $i <= $count; $i++) {
-    $rabbit->send($msg_body . " $i of $count", $routing_key);
+    $rabbit->send($msg_body . " $i of $count");
 }
 
 $rabbit->close();

@@ -5,14 +5,14 @@ include(__DIR__ . '/rabbit.php');
 // usage: recv.php [auto|basic]
 // e.g. php -f recv.php auto
 
-$ack = isset($argv[1]) ? $argv[1] : "auto";
+$ack = isset($argv[1]) ? $argv[1] : "basic";
 $auto_ack = $ack == "auto"
 
 $exchange    = "test";
 $routing_key = $ack . "Ack";
 $queue       = $routing_key;
 
-$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, $queue);
+$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, $queue, $routing_key);
 
 $callback = function($msg) {
     echo " [x] Received ", $msg->body, "\n";
