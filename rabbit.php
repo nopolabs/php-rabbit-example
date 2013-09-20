@@ -8,9 +8,9 @@ class Rabbit {
     private $channel;
     private $exchange;
 
-    public function __construct($host, $port, $user, $pass, $exchange, $queues) {
+    public function __construct($host, $port, $user, $pass, $exchange, $queues, $vhost = "/") {
 
-        $conn = new AMQPConnection($host, $port, $user, $pass);
+        $conn = new AMQPConnection($host, $port, $user, $pass, $vhost);
         
         $ch = $conn->channel();
 
