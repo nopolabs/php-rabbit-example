@@ -6,14 +6,19 @@ include(__DIR__ . '/rabbit.php');
 // e.g. php -f recv.php
 
 // "auto" or "basic" selects whether callback needs
-// to send basic_ack to ackknowledge message receipt.
+// to send basic_ack to acknowledge message receipt.
 $ack = "basic"; 
 $auto_ack = $ack == "auto";
 
 $exchange = "test";
-$queue    = "test-queue";
+$queues   = array("test-queue");
+$host     = HOST
+$port     = PORT
+$user     = USER
+$pass     = PASS
+$vhost    = VHOST;
 
-$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, array($queue));
+$rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $queues, $vhost);
 
 $callback = function($msg) use ($auto_ack) {
 

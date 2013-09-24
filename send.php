@@ -7,14 +7,19 @@ include(__DIR__ . '/rabbit.php');
 
 $count = isset($argv[1]) ? $argv[1] : 1;
 
-$exchange    = "test";
-$queue       = "test-queue";
+$exchange = "test";
+$queues   = array("test-queue");
+$host     = HOST
+$port     = PORT
+$user     = USER
+$pass     = PASS
+$vhost    = VHOST;
 
-$rabbit = new Rabbit(HOST, PORT, USER, PASS, $exchange, array($queue));
+$rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $queues, $vhost);
 
 $msg_body = "hello";
 
-$routing_key = $queue;
+$routing_key = $queues[0];
 
 for ($i = 1; $i <= $count; $i++) {
     $rabbit->send($msg_body . " $i of $count", $routing_key);
