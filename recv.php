@@ -12,10 +12,10 @@ $auto_ack = $ack == "auto";
 
 $exchange = "test";
 $queues   = array("test-queue");
-$host     = HOST
-$port     = PORT
-$user     = USER
-$pass     = PASS
+$host     = HOST;
+$port     = PORT;
+$user     = USER;
+$pass     = PASS;
 $vhost    = VHOST;
 
 $rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $queues, $vhost);
