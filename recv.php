@@ -10,35 +10,37 @@ include(__DIR__ . '/rabbit.php');
 $ack = "basic"; 
 $auto_ack = $ack == "auto";
 
-$exchange = "test";
-$queues   = array("test-queue");
-$host     = HOST;
-$port     = PORT;
-$user     = USER;
-$pass     = PASS;
-$vhost    = VHOST;
+$exchange     = "test-exchange";
+$queue        = "test-queue";
+$routing_key  = $queue;
+$host         = HOST;
+$port         = PORT;
+$user         = USER;
+$pass         = PASS;
+$vhost        = VHOST;
+$consumer_tag = "recv.php";
 
-$rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $queues, $vhost);
+$rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $vhost);
 
 $callback = function($msg) use ($auto_ack) {
 
-    echo " [x] Received ", $msg->body, "\n";
-
     $info = $msg->delivery_info;
+    $tag  = $info["consumer_tag"];
+    $ch   = $info['channel'];
 
-    $ch = $info['channel'];
+    echo " [$tag] Received ", $msg->body, "\n";
     
     if (!$auto_ack) {
         $ch->basic_ack($info['delivery_tag']);
     }
     
     if ($msg->body === 'quit') {
-        $ch->basic_cancel($info['consumer_tag']);
+        $ch->basic_cancel($tag);
     }
 };
 
-echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
+echo "[$consumer_tag] Waiting for messages. To exit press CTRL+C\n";
 
-$rabbit->listen($queue, $callback, $auto_ack);
+$rabbit->listen($queue, $callback, $consumer_tag, $auto_ack);
 
 $rabbit->close();
