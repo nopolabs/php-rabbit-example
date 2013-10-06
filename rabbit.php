@@ -21,13 +21,8 @@ class Rabbit {
         $this->routing  = array();
     }
 
-    public function send($body, $queue, $persistent = true) {
-
-        echo "sending: $body\n";
-        $msg = new AMQPMessage(
-            $body, 
-            array('content_type'  => 'text/plain', 
-                  'delivery_mode' => $persistent ? 2 : 1));
+    public function send($queue, $body, $properties = null) {
+        $msg = new AMQPMessage($body, $properties);
         $this->channel->basic_publish($msg, $this->exchange, $this->get_routing_key($queue));
     }
 

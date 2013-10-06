@@ -20,8 +20,11 @@ $rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $vhost);
 
 $msg_body = "Fanmail from a flounder.";
 
+$properties = array('content_type'  => 'text/plain', 
+                    'delivery_mode' => 1); // 1 == not persistent, 2 == persistent
+
 for ($i = 1; $i <= $count; $i++) {
-    $rabbit->send($msg_body . " $i of $count", $routing_key);
+    $rabbit->send($routing_key, $msg_body . " $i of $count", $properties);
 }
 
 $rabbit->close();
