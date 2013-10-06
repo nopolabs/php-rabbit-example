@@ -7,7 +7,8 @@ include(__DIR__ . '/rabbit.php');
 
 // "auto" or "basic" selects whether callback needs
 // to send basic_ack to acknowledge message receipt.
-$ack = "basic"; 
+$ack = isset($argv[1]) ? $argv[1] : "basic";
+ 
 $auto_ack = $ack == "auto";
 
 $exchange     = "test-exchange";

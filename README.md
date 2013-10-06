@@ -4,14 +4,9 @@
 See composer.json and http://getcomposer.org
 
 #### send.php
-    usage: send.php [auto|basic] [count]
+    usage: send.php [count]
   
-    e.g. php -f send.php auto 100
-
-    auto and basic are used to selected a queue and a routingKey
-    with either autoAck or basicAck behavior. Actually implementing
-    those behaviors is the responsibility of the queue consumer,
-    see recv.php
+    e.g. php -f send.php 100
 
 #### recv.php
     usage: recv.php [auto|basic]
