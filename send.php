@@ -7,14 +7,20 @@ include(__DIR__ . '/rabbit.php');
 
 $count = isset($argv[1]) ? $argv[1] : 1;
 
-$exchange    = "devo";
-$queue       = "test-queue";
-$routing_key = $queue;
-$host        = HOST;
-$port        = PORT;
+$uri = isset($argv[2]) ? $argv[2] : HOST . ":" . PORT . "/" . VHOST . "/devo/test-queue"; 
+
+preg_match('#([^:/]+):(\d+)/(/|[^/]+)/([^/]+)/([^/]+)#', $uri, $matches);
+
+echo "$uri\n";
+
+$host        = $matches[1];
+$port        = $matches[2];
+$vhost       = $matches[3];
+$exchange    = $matches[4];
+$queue       = $matches[5];
 $user        = USER;
 $pass        = PASS;
-$vhost       = VHOST;
+$routing_key = $queue;
 
 $rabbit = new Rabbit($host, $port, $user, $pass, $exchange, $vhost);
 

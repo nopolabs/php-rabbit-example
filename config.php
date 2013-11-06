@@ -10,3 +10,5 @@ define('VHOST',    '/');
 
 //If this is enabled you can see AMQP output on the CLI
 define('AMQP_DEBUG', false);
+
+$amqp = new AMQPConnection(HOST, PORT, USER, PASS, VHOST);
